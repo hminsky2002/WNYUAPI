@@ -31,7 +31,6 @@ const getSpinById = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-
 export const spinsHandlers = {
   getSpins,
   getSpinById,
