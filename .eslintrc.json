@@ -31,7 +31,8 @@
         ],
         "newlines-between": "never"
       }
-    ]
+    ],
+    "@typescript-eslint/no-misused-promises": "off"
   },
   "overrides": [
     {
