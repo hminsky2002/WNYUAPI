@@ -12,8 +12,8 @@
     "lint:swagger": "swagger-spec-validator src/openapi.json",
     "lint:tsc": "tsc --noEmit -p tsconfig.json",
     "lint:prettier": "prettier . --check",
-    "start": "ts-node src/index.ts",
-    "dev": "nodemon src/index.ts"
+    "start": "ts-node src/index.ts | pino-pretty",
+    "dev": "nodemon src/index.ts | pino-pretty"
   },
   "repository": {
     "type": "git",
@@ -38,6 +38,7 @@
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-sort-exports": "^0.9.1",
     "nodemon": "^3.1.4",
+    "pino-pretty": "^11.2.1",
     "prettier": "^3.3.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.3"
@@ -47,6 +48,8 @@
     "ajv-formats": "^3.0.1",
     "cors": "^2.8.5",
     "express": "^4.19.2",
+    "pino": "^9.2.0",
+    "pino-http": "^10.2.0",
     "tsc": "^2.0.4"
   }
 }
