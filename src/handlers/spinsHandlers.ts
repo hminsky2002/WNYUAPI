@@ -1,6 +1,10 @@
-import type { Request, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 
-const getSpins = async (req: Request, res: Response): Promise<void> => {
+const getSpins = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
   try {
     const baseUrl = `${process.env.SPINITRON_API_URL}/spins`;
     const searchParams = new URLSearchParams(req.query as any).toString();
@@ -12,11 +16,15 @@ const getSpins = async (req: Request, res: Response): Promise<void> => {
     const output = await data.json();
     res.send(output);
   } catch (error) {
-    res.status(500).send({ error: 'An error occurred while fetching data.' });
+    next(error);
   }
 };
 
-const getSpinById = async (req: Request, res: Response): Promise<void> => {
+const getSpinById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
   try {
     const data = await fetch(
       `${process.env.SPINITRON_API_URL}/spins/${req.params.id}`,
@@ -27,7 +35,7 @@ const getSpinById = async (req: Request, res: Response): Promise<void> => {
     const output = await data.json();
     res.send(output);
   } catch (error) {
-    res.status(500).send({ error: 'An error occurred while fetching data.' });
+    next(error);
   }
 };
 
