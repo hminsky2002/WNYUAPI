@@ -1,6 +1,10 @@
-import type { Request, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 
-const getPlaylists = async (req: Request, res: Response): Promise<void> => {
+const getPlaylists = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
   try {
     const baseUrl = `${process.env.SPINITRON_API_URL}/playlists`;
     const searchParams = new URLSearchParams(req.query as any).toString();
@@ -12,11 +16,15 @@ const getPlaylists = async (req: Request, res: Response): Promise<void> => {
     const output = await data.json();
     res.send(output);
   } catch (error) {
-    res.status(500).send({ error: 'An error occurred while fetching data.' });
+    next(error);
   }
 };
 
-const getPlaylistById = async (req: Request, res: Response): Promise<void> => {
+const getPlaylistById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
   try {
     const data = await fetch(
       `${process.env.SPINITRON_API_URL}/playlists/${req.params.id}`,
@@ -27,7 +35,7 @@ const getPlaylistById = async (req: Request, res: Response): Promise<void> => {
     const output = await data.json();
     res.send(output);
   } catch (error) {
-    res.status(500).send({ error: 'An error occurred while fetching data.' });
+    next(error);
   }
 };
 
