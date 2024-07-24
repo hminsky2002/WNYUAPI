@@ -5,5 +5,6 @@ const showsRouter = express.Router();
 
 showsRouter.get('/', showsHandlers.getShows);
 showsRouter.get('/:id', showsHandlers.getShowById);
+showsRouter.get('/schedule/upcoming', showsHandlers.getUpcoming);
 
 export { showsRouter };
