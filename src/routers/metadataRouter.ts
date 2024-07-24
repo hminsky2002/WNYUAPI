@@ -3,6 +3,6 @@ import { metadataHandlers } from '../handlers/metadataHandlers';
 
 const metadataRouter = express.Router({});
 
-metadataRouter.post('/push', metadataHandlers.postMetadata);
-metadataRouter.post('/', metadataHandlers.streamMetadata);
+metadataRouter.post('/', metadataHandlers.postMetadata);
+metadataRouter.get('/', metadataHandlers.getMetadata);
 export { metadataRouter };
