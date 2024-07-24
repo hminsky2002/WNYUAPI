@@ -1,8 +1,5 @@
-import { getLogger } from '../logger';
 import type { SpinitronMetadata } from '../types';
 import type { NextFunction, Request, Response } from 'express';
-
-const logger = getLogger(__filename);
 
 let metadata: SpinitronMetadata = {};
 
