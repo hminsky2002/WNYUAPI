@@ -1,17 +1,4 @@
-import { currentPlaylistStore } from '../stores';
 import type { NextFunction, Request, Response } from 'express';
-
-const getCurrentPlaylist = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-): Promise<void> => {
-  try {
-    res.send(currentPlaylistStore.getData());
-  } catch (error) {
-    next(error);
-  }
-};
 
 const getPlaylists = async (
   req: Request,
@@ -57,5 +44,4 @@ const getPlaylistById = async (
 export const playlistsHandlers = {
   getPlaylists,
   getPlaylistById,
-  getCurrentPlaylist,
 };
