@@ -1,7 +1,6 @@
 import type { SpinitronMetadata } from '@wnyu/spinitron-sdk';
 import type { NextFunction, Request, Response } from 'express';
-
-let metadata: SpinitronMetadata = {};
+import { metadataStore } from '../stores';
 
 const postMetadata = async (
   req: Request,
@@ -10,7 +9,7 @@ const postMetadata = async (
 ) => {
   try {
     const newMetadata = req.body as SpinitronMetadata;
-    metadata = newMetadata;
+    metadataStore.setData(newMetadata);
     res.json(newMetadata);
   } catch (error) {
     next(error);
@@ -19,7 +18,7 @@ const postMetadata = async (
 
 const getMetadata = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    res.json(metadata);
+    res.json(metadataStore.getData());
   } catch (error) {
     next(error);
   }
@@ -29,5 +28,3 @@ export const metadataHandlers = {
   postMetadata,
   getMetadata,
 };
-
-export { metadata };
