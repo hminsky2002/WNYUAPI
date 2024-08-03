@@ -2,6 +2,8 @@
 
 Typescript/Express API for proxying requests to Spinitron for WNYU
 
+Much inspiration taken from the [pdc-service repository](https://github.com/PhilanthropyDataCommons/service)
+
 ## Deployment
 
 This API is currently deployed at https://lobster-app-zabc8.ondigitalocean.app/,

@@ -1,17 +1,4 @@
-import { currentSpinsStore } from '../stores';
 import type { NextFunction, Request, Response } from 'express';
-
-const getCurrentSpins = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-): Promise<void> => {
-  try {
-    res.send(currentSpinsStore.getData());
-  } catch (error) {
-    next(error);
-  }
-};
 
 const getSpins = async (
   req: Request,
@@ -57,5 +44,4 @@ const getSpinById = async (
 export const spinsHandlers = {
   getSpins,
   getSpinById,
-  getCurrentSpins,
 };
