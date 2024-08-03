@@ -1,4 +1,4 @@
-import type { SpinitronMetadata } from '../types';
+import type { SpinitronMetadata } from '@wnyu/spinitron-sdk';
 import type { NextFunction, Request, Response } from 'express';
 
 let metadata: SpinitronMetadata = {};
@@ -29,3 +29,5 @@ export const metadataHandlers = {
   postMetadata,
   getMetadata,
 };
+
+export { metadata };
