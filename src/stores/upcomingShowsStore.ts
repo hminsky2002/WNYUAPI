@@ -1,6 +1,6 @@
-import type { Show, ShowsResponse } from '@wnyu/spinitron-sdk';
 import { getLogger } from '../logger';
-import Store from './Store';
+import { Store } from './Store';
+import type { Show, ShowsResponse } from '@wnyu/spinitron-sdk';
 
 const logger = getLogger(__filename);
 
@@ -8,7 +8,7 @@ const upcomingShowsStore = new Store<Show[]>([]);
 
 const UPCOMING_SHOWS_CACHE_DURATION = 30 * 60 * 1000;
 
-async function fetchUpcoming() {
+async function fetchUpcoming(): Promise<void> {
   try {
     const start = new Date().toISOString();
     const end = new Date(
@@ -32,6 +32,8 @@ async function fetchUpcoming() {
 
 setInterval(fetchUpcoming, UPCOMING_SHOWS_CACHE_DURATION);
 
-fetchUpcoming();
+fetchUpcoming().catch((error) =>
+  logger.info('Upcoming Shows Store failed to initialized', error),
+);
 
 export { upcomingShowsStore };

@@ -1,5 +1,5 @@
+import { upcomingShowsStore } from '../stores';
 import type { NextFunction, Request, Response } from 'express';
-import { upcomingShowsStore } from '../stores'; 
 
 const getUpcoming = async (
   req: Request,
@@ -20,7 +20,9 @@ const getShows = async (
 ): Promise<void> => {
   try {
     const baseUrl = `${process.env.SPINITRON_API_URL}/shows`;
-    const searchParams = new URLSearchParams(req.query as any).toString();
+    const searchParams = new URLSearchParams(
+      req.query as unknown as string,
+    ).toString();
     const url = searchParams ? `${baseUrl}?${searchParams}` : baseUrl;
 
     const data = await fetch(url, {
