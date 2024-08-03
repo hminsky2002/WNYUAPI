@@ -85,3 +85,5 @@ export const playlistsHandlers = {
   getPlaylistById,
   getCurrentPlaylist,
 };
+
+export { currentPlaylist };
