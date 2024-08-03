@@ -1,30 +1,5 @@
 import type { NextFunction, Request, Response } from 'express';
-import { currentPlaylist } from './playlistsHandlers';
-import { getLogger } from '../logger';
-import { SpinsResponse } from '@wnyu/spinitron-sdk';
-const logger = getLogger(__filename);
-
-let currentSpins: SpinsResponse | undefined;
-
-const UPCOMING_CACHE_DURATION = 3 * 60 * 1000;
-
-async function fetchCurrentSpins() {
-  try {
-    const url = `${process.env.SPINITRON_API_URL}/spins?${`playlist_id=${currentPlaylist?.items[0]?.id}&count=50` ?? ''}`;
-    const response = await fetch(url, {
-      headers: { Authorization: `Bearer ${process.env.SPINITRON_API_KEY}` },
-    });
-    const spinsData = (await response.json()) as SpinsResponse;
-    currentSpins = spinsData;
-    logger.info(`Spins updated at ${Date.now()}`);
-  } catch (error) {
-    logger.error(error);
-  }
-}
-
-setInterval(fetchCurrentSpins, UPCOMING_CACHE_DURATION);
-
-fetchCurrentSpins();
+import { currentSpinsStore } from '../stores';
 
 const getCurrentSpins = async (
   req: Request,
@@ -32,7 +7,7 @@ const getCurrentSpins = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    res.send(currentSpins);
+    res.send(currentSpinsStore.getData());
   } catch (error) {
     next(error);
   }
@@ -82,5 +57,3 @@ export const spinsHandlers = {
   getSpinById,
   getCurrentSpins,
 };
-
-export { currentSpins };

@@ -1,33 +1,5 @@
-import { PlaylistsResponse } from '@wnyu/spinitron-sdk';
 import type { NextFunction, Request, Response } from 'express';
-import { getLogger } from '../logger';
-const logger = getLogger(__filename);
-
-// Cache variable to store the current playlist
-let currentPlaylist: PlaylistsResponse | undefined = undefined;
-
-const UPCOMING_CACHE_DURATION = 5 * 60 * 1000;
-
-async function fetchCurrentPlaylist() {
-  try {
-    const searchParams = new URLSearchParams({
-      count: '1',
-    }).toString();
-    const url = `${process.env.SPINITRON_API_URL}/playlists?${searchParams}`;
-    const response = await fetch(url, {
-      headers: { Authorization: `Bearer ${process.env.SPINITRON_API_KEY}` },
-    });
-    const playlistData = (await response.json()) as PlaylistsResponse;
-    currentPlaylist = playlistData;
-    logger.info(`Playlist updated at ${Date.now()}`);
-  } catch (error) {
-    logger.error(error);
-  }
-}
-
-setInterval(fetchCurrentPlaylist, UPCOMING_CACHE_DURATION);
-
-fetchCurrentPlaylist();
+import { currentPlaylistStore } from '../stores';
 
 const getCurrentPlaylist = async (
   req: Request,
@@ -35,7 +7,7 @@ const getCurrentPlaylist = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    res.send(currentPlaylist);
+    res.send(currentPlaylistStore.getData());
   } catch (error) {
     next(error);
   }
@@ -85,5 +57,3 @@ export const playlistsHandlers = {
   getPlaylistById,
   getCurrentPlaylist,
 };
-
-export { currentPlaylist };
