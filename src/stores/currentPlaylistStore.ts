@@ -1,13 +1,14 @@
-import type { Playlist, PlaylistsResponse } from '@wnyu/spinitron-sdk';
-import Store from './Store';
 import { getLogger } from '../logger';
+import { Store } from './Store';
+import type { Playlist, PlaylistsResponse } from '@wnyu/spinitron-sdk';
+
 const logger = getLogger(__filename);
 
 const currentPlaylistStore = new Store<Playlist[]>([]);
 
 const CURRENT_PLAYLIST_CACHE_DURATION = 5 * 60 * 1000;
 
-async function fetchCurrentPlaylist() {
+const fetchCurrentPlaylist = async () => {
   try {
     const searchParams = new URLSearchParams({
       count: '1',
@@ -22,9 +23,12 @@ async function fetchCurrentPlaylist() {
   } catch (error) {
     logger.error(error);
   }
-}
+};
 
 setInterval(fetchCurrentPlaylist, CURRENT_PLAYLIST_CACHE_DURATION);
 
-fetchCurrentPlaylist();
+fetchCurrentPlaylist().catch((error) =>
+  logger.info('Current Playlist Store failed to initialized', error),
+);
+
 export { currentPlaylistStore };

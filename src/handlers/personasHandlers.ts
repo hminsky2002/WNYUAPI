@@ -7,7 +7,9 @@ const getPersonas = async (
 ): Promise<void> => {
   try {
     const baseUrl = `${process.env.SPINITRON_API_URL}/personas`;
-    const searchParams = new URLSearchParams(req.query as any).toString();
+    const searchParams = new URLSearchParams(
+      req.query as unknown as string,
+    ).toString();
     const url = searchParams ? `${baseUrl}?${searchParams}` : baseUrl;
     const data = await fetch(url, {
       headers: { Authorization: `Bearer ${process.env.SPINITRON_API_KEY}` },

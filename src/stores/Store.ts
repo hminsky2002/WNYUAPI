@@ -17,4 +17,4 @@ class Store<T> {
   }
 }
 
-export default Store;
+export { Store };

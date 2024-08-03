@@ -1,5 +1,5 @@
-import type { NextFunction, Request, Response } from 'express';
 import { currentSpinsStore } from '../stores';
+import type { NextFunction, Request, Response } from 'express';
 
 const getCurrentSpins = async (
   req: Request,
@@ -20,7 +20,9 @@ const getSpins = async (
 ): Promise<void> => {
   try {
     const baseUrl = `${process.env.SPINITRON_API_URL}/spins`;
-    const searchParams = new URLSearchParams(req.query as any).toString();
+    const searchParams = new URLSearchParams(
+      req.query as unknown as string,
+    ).toString();
     const url = searchParams ? `${baseUrl}?${searchParams}` : baseUrl;
 
     const data = await fetch(url, {

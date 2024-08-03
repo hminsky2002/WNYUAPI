@@ -1,6 +1,6 @@
+import { metadataStore } from '../stores';
 import type { SpinitronMetadata } from '@wnyu/spinitron-sdk';
 import type { NextFunction, Request, Response } from 'express';
-import { metadataStore } from '../stores';
 
 const postMetadata = async (
   req: Request,

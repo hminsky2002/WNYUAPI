@@ -1,7 +1,7 @@
-import type { Spin, SpinsResponse } from '@wnyu/spinitron-sdk';
 import { getLogger } from '../logger';
-import Store from './Store';
+import { Store } from './Store';
 import { currentPlaylistStore } from './currentPlaylistStore';
+import type { Spin, SpinsResponse } from '@wnyu/spinitron-sdk';
 
 const logger = getLogger(__filename);
 
@@ -9,7 +9,7 @@ const currentSpinsStore = new Store<Spin[]>([]);
 
 const CURRENT_SPINS_CACHE_DURATION = 3 * 60 * 1000;
 
-async function fetchCurrentSpins() {
+async function fetchCurrentSpins(): Promise<void> {
   try {
     const url = `${process.env.SPINITRON_API_URL}/spins?${`playlist_id=${currentPlaylistStore.getData()[0]?.id}&count=50` ?? ''}`;
     const response = await fetch(url, {
@@ -25,6 +25,8 @@ async function fetchCurrentSpins() {
 
 setInterval(fetchCurrentSpins, CURRENT_SPINS_CACHE_DURATION);
 
-fetchCurrentSpins();
+fetchCurrentSpins().catch((error) =>
+  logger.info('Current Spins Store failed to initialized', error),
+);
 
 export { currentSpinsStore };
