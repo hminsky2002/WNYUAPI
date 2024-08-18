@@ -3,7 +3,7 @@ import { personasHandlers } from '../handlers/personasHandlers';
 
 const personasRouter = express.Router();
 
-personasRouter.use('/', personasHandlers.getPersonas);
+personasRouter.get('/', personasHandlers.getPersonas);
 personasRouter.get('/:id', personasHandlers.getPersonaById);
 
 export { personasRouter };
