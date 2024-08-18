@@ -19,11 +19,7 @@ const getShows = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const baseUrl = `${process.env.SPINITRON_API_URL}/shows`;
-    const searchParams = new URLSearchParams(
-      req.query as unknown as string,
-    ).toString();
-    const url = searchParams ? `${baseUrl}?${searchParams}` : baseUrl;
+    const url = `${process.env.SPINITRON_API_URL}/shows?expand=personas`;
 
     const data = await fetch(url, {
       headers: { Authorization: `Bearer ${process.env.SPINITRON_API_KEY}` },
@@ -42,7 +38,7 @@ const getShowById = async (
 ): Promise<void> => {
   try {
     const data = await fetch(
-      `${process.env.SPINITRON_API_URL}/shows/${req.params.id}`,
+      `${process.env.SPINITRON_API_URL}/shows/${req.params.id}?expand=personas`,
       {
         headers: { Authorization: `Bearer ${process.env.SPINITRON_API_KEY}` },
       },

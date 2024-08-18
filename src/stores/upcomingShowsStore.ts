@@ -17,6 +17,7 @@ async function fetchUpcoming(): Promise<void> {
     const searchParams = new URLSearchParams({
       start,
       end,
+      expand: 'personas',
     }).toString();
     const url = `${process.env.SPINITRON_API_URL}/shows?${searchParams}`;
     const response = await fetch(url, {
