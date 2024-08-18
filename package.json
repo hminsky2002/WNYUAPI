@@ -8,6 +8,7 @@
     "build:node": "tsc -p tsconfig.json",
     "format": "prettier . --write",
     "lint": "npm run lint:eslint && npm run lint:prettier && npm run lint:tsc",
+    "lint-fix": "eslint ./src --ext .ts --max-warnings=0 --fix",
     "lint:eslint": "eslint ./src --ext .ts --max-warnings=0",
     "lint:tsc": "tsc --noEmit -p tsconfig.json",
     "lint:prettier": "prettier . --check",

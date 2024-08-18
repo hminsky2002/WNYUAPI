@@ -1,3 +1,6 @@
+import { personasStore } from '../stores';
+import { InputValidationError, NotFoundError } from '../errors';
+import { isId } from '../types';
 import type { NextFunction, Request, Response } from 'express';
 
 const getPersonas = async (
@@ -6,35 +9,30 @@ const getPersonas = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const baseUrl = `${process.env.SPINITRON_API_URL}/personas`;
-    const searchParams = new URLSearchParams(
-      req.query as unknown as string,
-    ).toString();
-    const url = searchParams ? `${baseUrl}?${searchParams}` : baseUrl;
-    const data = await fetch(url, {
-      headers: { Authorization: `Bearer ${process.env.SPINITRON_API_KEY}` },
-    });
-    const output = await data.json();
-    res.send(output);
+    res.send(personasStore.getData());
   } catch (error) {
     next(error);
   }
 };
 
 const getPersonaById = async (
-  req: Request,
+  req: Request<{ personaId: string }>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const data = await fetch(
-      `${process.env.SPINITRON_API_URL}/personas/${req.params.id}`,
-      {
-        headers: { Authorization: `Bearer ${process.env.SPINITRON_API_KEY}` },
-      },
-    );
-    const output = await data.json();
-    res.send(output);
+    const personaId = Number.parseInt(req.params.personaId, 10);
+
+    if (!isId(personaId)) {
+      next(new InputValidationError('Invalid Id', isId.errors ?? []));
+      return;
+    }
+    const persona = personasStore.getData().find((p) => p.id === personaId);
+    if (persona === undefined) {
+      next(new NotFoundError('No Persona Found with given id'));
+      return;
+    }
+    res.send(persona);
   } catch (error) {
     next(error);
   }

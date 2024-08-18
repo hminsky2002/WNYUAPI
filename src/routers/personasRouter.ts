@@ -4,6 +4,6 @@ import { personasHandlers } from '../handlers/personasHandlers';
 const personasRouter = express.Router();
 
 personasRouter.get('/', personasHandlers.getPersonas);
-personasRouter.get('/:id', personasHandlers.getPersonaById);
+personasRouter.get('/:personaId', personasHandlers.getPersonaById);
 
 export { personasRouter };
