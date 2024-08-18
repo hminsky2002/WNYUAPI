@@ -32,7 +32,8 @@
         "newlines-between": "never"
       }
     ],
-    "@typescript-eslint/no-misused-promises": "off"
+    "@typescript-eslint/no-misused-promises": "off",
+    "no-underscore-dangle": "off"
   },
   "overrides": [
     {
