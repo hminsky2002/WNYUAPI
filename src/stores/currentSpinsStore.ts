@@ -11,7 +11,7 @@ const CURRENT_SPINS_CACHE_DURATION = 3 * 60 * 1000;
 
 async function fetchCurrentSpins(): Promise<void> {
   try {
-    const url = `${process.env.SPINITRON_API_URL}/spins?${`playlist_id=${currentPlaylistStore.getData()[0]?.id}&count=50` ?? ''}`;
+    const url = `${process.env.SPINITRON_API_URL}/spins?${`playlist_id=${currentPlaylistStore.getData()[0]?.id}&count=50`}`;
     const response = await fetch(url, {
       headers: { Authorization: `Bearer ${process.env.SPINITRON_API_KEY}` },
     });

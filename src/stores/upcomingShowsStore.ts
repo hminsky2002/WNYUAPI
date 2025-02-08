@@ -6,7 +6,7 @@ const logger = getLogger(__filename);
 
 const upcomingShowsStore = new Store<Show[]>([]);
 
-const UPCOMING_SHOWS_CACHE_DURATION = 30 * 60 * 1000;
+const UPCOMING_SHOWS_CACHE_DURATION = 5 * 60 * 1000;
 
 async function fetchUpcoming(): Promise<void> {
   try {
